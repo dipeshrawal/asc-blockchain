@@ -75,3 +75,9 @@ class RetailerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields="__all__"
+        
+        
+class RetailerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Retailer
+        fields="__all__"
