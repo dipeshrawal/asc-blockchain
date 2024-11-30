@@ -1,0 +1,98 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Navbar from '../Retailer/RetailerNavbar';
+
+const RetailerProductInfo = () => {
+  const [products, setProducts] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProductInfo = async () => {
+      try {
+        // Get the token and set up authorization headers
+        const token = localStorage.getItem('token');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        // Fetch the retailer's profile to get their ID
+        const profileResponse = await axios.get('http://127.0.0.1:8000/api/retailer/profile', config);
+        const retailerId = profileResponse.data.id;
+
+        // Fetch all contracts and filter by contracts where the retailer is the receiver
+        const contractsResponse = await axios.get('http://127.0.0.1:8000/api/retailer-smart-contracts/');
+        const retailerContracts = contractsResponse.data.filter(
+          (contract) => contract.receiver === retailerId
+        );
+
+        // Extract product IDs from filtered contracts
+        const productIds = retailerContracts.map((contract) => contract.product);
+
+        // Fetch product details for the extracted product IDs
+        const productResponses = await Promise.all(
+          productIds.map((productId) =>
+            axios.get(`http://127.0.0.1:8000/api/retailer-products/${productId}/`)
+          )
+        );
+
+        // Consolidate product data
+        const fetchedProducts = productResponses.map((response) => response.data);
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Error fetching product info:', error);
+        setErrorMessage('Failed to fetch product information.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductInfo();
+  }, []);
+
+  return (
+    <div className="bg-[#eaf0e1] min-h-screen">
+      <Navbar />
+      <div className="container mx-auto py-8">
+        <h1 className="text-3xl font-semibold text-center text-gray-700 mb-4">Retailer Products</h1>
+        {errorMessage && <p className="text-red-600 text-center">{errorMessage}</p>}
+        {loading ? (
+          <p className="text-center text-gray-700">Loading products...</p>
+        ) : products.length === 0 ? (
+          <p className="text-center text-gray-700">No products found.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="table-auto w-full border-collapse bg-white shadow-lg rounded-lg">
+              <thead>
+                <tr className="bg-blue-500 text-white text-left">
+                  <th className="px-4 py-2">Product ID</th>
+                  <th className="px-4 py-2">Product Name</th>
+                  <th className="px-4 py-2">Description</th>
+                  <th className="px-4 py-2">Price</th>
+                  <th className="px-4 py-2">Quantity</th>
+                  <th className="px-4 py-2">Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product, index) => (
+                  <tr key={product.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+                    <td className="border px-4 py-2">{product.id}</td>
+                    <td className="border px-4 py-2">{product.name}</td>
+                    <td className="border px-4 py-2">{product.description}</td>
+                    <td className="border px-4 py-2">${product.price}</td>
+                    <td className="border px-4 py-2">{product.quantity}</td>
+                    <td className="border px-4 py-2">{product.category}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default RetailerProductInfo;

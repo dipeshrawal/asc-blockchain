@@ -1,0 +1,39 @@
+/* About.css */
+.about-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #eaf6e5; /* Light green */
+  color: #4f8a10; /* Dark green */
+}
+
+.hamburger-icon {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  font-size: 30px; /* Hamburger icon size */
+  cursor: pointer;
+  z-index: 2;
+  color: #4c9a2a; /* Green color for the icon */
+}
+
+.about-container {
+  max-width: 800px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.about-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.about-container p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
