@@ -36,11 +36,11 @@ const RetailerDashboard = () => {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
             <Link
-              to="/retailerfarmerdata"
+              to="/retailerdistributordata"
               className="block bg-green-100 hover:bg-green-200 p-6 text-center rounded-lg shadow-md transition"
             >
               <h3 className="text-xl font-semibold text-green-600">
-                Farmer Data
+                Distributor Data
               </h3>
               <p className="text-gray-600 mt-2">Access information about farmers.</p>
             </Link>

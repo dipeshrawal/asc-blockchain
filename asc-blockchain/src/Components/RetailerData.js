@@ -48,7 +48,7 @@ const RetailerData = () => {
                     <td className="border px-4 py-2">{retailer.phone_number}</td>
                     <td className="border px-4 py-2">{retailer.address}</td>
                     <td className="border px-4 py-2">{retailer.email}</td>
-                    <td className="border px-4 py-2">{retailer.retailer_shop}</td>
+                    <td className="border px-4 py-2">{retailer.shop_name}</td>
                   </tr>
                 ))}
               </tbody>

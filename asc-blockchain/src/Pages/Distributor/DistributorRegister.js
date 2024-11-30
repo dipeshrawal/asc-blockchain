@@ -10,7 +10,7 @@ function DistributorRegister() {
   const [userType, setUserType] = useState("distributor"); // Default to 'distributor'
   const [companyName, setCompanyName] = useState("");
   const [deliveryZones, setDeliveryZones] = useState("");
-  const [walletaddress, setWalletAddress] = useState("00");
+  const [walletaddress, setWalletAddress] = useState("0");
   const [phoneNumber, setPhoneNumber] = useState(""); // New phone number state
   const [address, setAddress] = useState(""); // New address state
   const [isOpen, setIsOpen] = useState(false);

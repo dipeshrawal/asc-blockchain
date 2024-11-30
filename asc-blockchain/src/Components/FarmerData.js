@@ -46,7 +46,7 @@ const FarmerData = () => {
                     <td className="border px-4 py-2">{farmer.id}</td>
                     <td className="border px-4 py-2">{farmer.name}</td>
                     <td className="border px-4 py-2">{farmer.phone_number}</td>
-                    <td className="border px-4 py-2">{farmer.address}</td>
+                    <td className="border px-4 py-2">{farmer.location}</td>
                     <td className="border px-4 py-2">{farmer.email}</td>
                     <td className="border px-4 py-2">{farmer.farm_name}</td>
                   </tr>

@@ -29,20 +29,20 @@ const FarmerDashboard = () => {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
             <Link
-              to="/addfarmerproducts"
+              to="/farmerdistributordata"
               className="block bg-blue-100 hover:bg-blue-200 p-6 text-center rounded-lg shadow-md transition"
             >
               <h3 className="text-xl font-semibold text-blue-600">
-                Add Products
+                Distributor Data
               </h3>
               <p className="text-gray-600 mt-2">Add new products to your list.</p>
             </Link>
             <Link
-              to="/productlist"
+              to="/farmerretailerdata"
               className="block bg-green-100 hover:bg-green-200 p-6 text-center rounded-lg shadow-md transition"
             >
               <h3 className="text-xl font-semibold text-green-600">
-                Product List
+                Retailer Data
               </h3>
               <p className="text-gray-600 mt-2">View and manage your products.</p>
             </Link>

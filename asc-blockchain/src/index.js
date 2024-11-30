@@ -37,7 +37,9 @@ import CustomerProfile from './Pages/Customer/CustomerProfile';
 import DistributorProfile from './Pages/Distributor/DistributorProfile';
 import RetailerProfile from './Pages/Retailer/RetailerProfile';
 import CustomerProductrate from './Pages/Customer/CustomerProductrate';
-import AllRetailerData from './Components/AllRetailerData';
+import FarmerDistributorData from './Pages/Farmer/FarmerDistributorData';
+import FarmerRetailerData from './Pages/Farmer/FarmerRetailerData';
+import RetailerDistributorData from './Pages/Retailer/RetailerDistributorData';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -77,7 +79,10 @@ root.render(
       <Route path="/distributorprofile" element={<DistributorProfile />} />      
       <Route path="/customerproductrate" element={<CustomerProductrate />} />      
       <Route path="/retailerprofile" element={<RetailerProfile />} />      
-      <Route path="/allretailerdata" element={<AllRetailerData />} />      
+      <Route path="/farmerdistributordata" element={<FarmerDistributorData />} />      
+      <Route path="/farmerretailerdata" element={<FarmerRetailerData />} />      
+      <Route path="/retailerdistributordata" element={<RetailerDistributorData />} />      
+       
 
     </Routes>
   </Router>

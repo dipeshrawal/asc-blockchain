@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../Pages/Customer/CustomerNavbar';
+import Navbar from './FarmerNavbar';
 
-const AllRetailerData = () => {
+const FarmerRetailerData = () => {
   const [retailers, setRetailers] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -48,7 +48,7 @@ const AllRetailerData = () => {
                     <td className="border px-4 py-2">{retailer.phone_number}</td>
                     <td className="border px-4 py-2">{retailer.address}</td>
                     <td className="border px-4 py-2">{retailer.email}</td>
-                    <td className="border px-4 py-2">{retailer.retailer_shop}</td>
+                    <td className="border px-4 py-2">{retailer.shop_name}</td>
                   </tr>
                 ))}
               </tbody>
@@ -62,4 +62,4 @@ const AllRetailerData = () => {
   );
 };
 
-export default AllRetailerData;
+export default FarmerRetailerData;

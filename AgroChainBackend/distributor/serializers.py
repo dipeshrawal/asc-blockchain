@@ -14,7 +14,7 @@ class DistributorRegistrationSerializer(UserRegistrationSerializer):
     def create(self, validated_data):
             # Extract company_name and delivery_zones
             company_name = validated_data.pop('company_name', None)
-            delivery_zones = validated_data.pop('delivery_', None)
+            delivery_zones = validated_data.pop('delivery_zone', None)
             phone_number= validated_data.pop('phone_number', None)
             address= validated_data.pop('address', None)
             wallet_address = validated_data.pop('wallet_address', None)
@@ -37,6 +37,8 @@ class DistributorRegistrationSerializer(UserRegistrationSerializer):
                 distributor.certification_status
             if number_of_deliveries:
                 distributor.number_of_deliveries
+            if address:
+                distributor.address = address
                 
             
             distributor.save()
