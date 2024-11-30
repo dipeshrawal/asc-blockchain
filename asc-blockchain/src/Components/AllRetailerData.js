@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../Pages/Customer/CustomerNavbar';
 
-const RetailerData = () => {
+const AllRetailerData = () => {
   const [retailers, setRetailers] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -62,4 +62,4 @@ const RetailerData = () => {
   );
 };
 
-export default RetailerData;
+export default AllRetailerData;

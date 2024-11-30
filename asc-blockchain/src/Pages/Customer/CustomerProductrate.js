@@ -52,7 +52,7 @@ const CustomerProductrate = () => {
               {productRates.map((productRate) => (
                 <tr key={productRate.id} className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4 text-gray-700">{productRate.id}</td>
-                  <td className="py-3 px-4 text-gray-700">{productRate.name}</td>
+                  <td className="py-3 px-4 text-gray-700">{productRate.product_name}</td>
                   <td className="py-3 px-4 text-gray-700">{productRate.price_per_kg}</td>
                   <td className="py-3 px-4 text-gray-700">{productRate.location}</td>
                 </tr>

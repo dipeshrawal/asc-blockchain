@@ -13,7 +13,7 @@ function RetailerRegister() {
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [storeType, setStoreType] = useState("");
-  const [walletaddress] = useState("00");
+  const [walletaddress] = useState("0");
   const [inventoryCapacity, setInventoryCapacity] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
