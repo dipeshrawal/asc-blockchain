@@ -26,7 +26,7 @@ class Product(models.Model):
     price_per_kg = models.DecimalField(max_digits=10, decimal_places=2)
     batch_number = models.CharField(max_length=255)
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name='products')
-    
+     
     qr_code = models.ImageField(upload_to='qr_codes/products/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
