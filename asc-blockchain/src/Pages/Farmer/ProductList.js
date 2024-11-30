@@ -63,7 +63,8 @@ const ProductList = () => {
                 <th className="py-3 px-4 font-medium text-gray-700">Harvest Date</th>
                 <th className="py-3 px-4 font-medium text-gray-700">Price per Kg</th>
                 <th className="py-3 px-4 font-medium text-gray-700">Quantity (kg)</th>
-                <th className="py-3 px-4 font-medium text-gray-700">Batch Number</th>
+                <th className="py-3 px-4 font-medium text-gray-700">Batch Number</th> 
+                <th className="py-3 px-4 font-medium text-gray-700"> QR Code</th> 
               </tr>
             </thead>
             <tbody>
@@ -76,6 +77,7 @@ const ProductList = () => {
                   <td className="py-3 px-4 text-gray-700">{product.price_per_kg}</td>
                   <td className="py-3 px-4 text-gray-700">{product.quantity}</td>
                   <td className="py-3 px-4 text-gray-700">{product.batch_number}</td>
+                  {/* <td className="py-3 px-4 text-gray-700">{product.qr_code}</td> */}
                 </tr>
               ))}
             </tbody>
