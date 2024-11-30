@@ -42,7 +42,7 @@ const FarmerData = () => {
               </thead>
               <tbody>
                 
-                <tr className="border-b text-black border-gray-200 hover:bg-green-100">
+                <tr className="border-b border-gray-200 hover:bg-green-100">
                   <td className="py-4 px-6">{farmer.user_ptr_id}</td>
                   <td className="py-4 px-6">{farmer.farm_name}</td>
                   <td className="py-4 px-6">{farmer.crop_name}</td>

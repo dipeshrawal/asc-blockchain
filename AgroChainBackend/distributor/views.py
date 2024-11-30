@@ -46,7 +46,7 @@ class DistributorLoginView(APIView):
             token = get_tokens_for_user(user)
 
             return Response({
-                'token': token,
+                'token': token['access'],
                 'msg': "Customer logged in successfully"
             }, status=status.HTTP_200_OK)
 

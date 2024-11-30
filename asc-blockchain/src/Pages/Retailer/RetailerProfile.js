@@ -61,10 +61,10 @@ const RetailerProfile = () => {
           <div className="bg-white shadow-lg rounded-2xl p-8 max-w-4xl mx-auto">
             <h1 className="text-4xl font-semibold text-gray-800 mb-20 text-center">Profile</h1>
             <div className="space-y-6">
-            <div className="flex justify-between">
-                <span className="text-lg font-medium text-gray-700">ID:</span>
-                <span className="text-lg text-gray-900">{profile.id}</span>
-              </div>
+                <div className="flex justify-between">
+                    <span className="text-lg font-medium text-gray-700">ID:</span>
+                    <span className="text-lg text-gray-900">{profile.id}</span>
+                </div>
               <div className="flex justify-between border-b pb-4">
                 <span className="text-lg font-medium text-gray-700">Name:</span>
                 <span className="text-lg text-gray-900">{profile.name}</span>
