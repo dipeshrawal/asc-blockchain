@@ -6,31 +6,31 @@ from .models import Transaction
 class TransactionAdmin(admin.ModelAdmin):
     # Fields to display in the admin list view
     list_display = (
-        'id', 'smart_contract', 'buyer', 'amount', 'payment_method', 
+        'id', 'buyer', 'amount', 'payment_method', 
         'payment_status', 'blockchain_hash', 'transaction_fee', 'created_at', 'updated_at'
     )
 
-    # Filters for the list view
-    list_filter = ('payment_method', 'payment_status', 'created_at', 'smart_contract')
+    # # Filters for the list view
+    # list_filter = ('payment_method', 'payment_status', 'created_at', 'smart_contract')
 
-    # Fields that can be searched in the admin interface
-    search_fields = ('blockchain_hash', 'smart_contract__product__name', 'buyer__email')
+    # # Fields that can be searched in the admin interface
+    # search_fields = ('blockchain_hash', 'smart_contract__product__name', 'buyer__email')
 
-    # Read-only fields
-    readonly_fields = ('created_at', 'updated_at')
+    # # Read-only fields
+    # readonly_fields = ('created_at', 'updated_at')
 
-    # Default ordering for the list view
-    ordering = ('-created_at',)
+    # # Default ordering for the list view
+    # ordering = ('-created_at',)
 
-    # Field grouping in the detailed view
-    fieldsets = (
-        ('Transaction Details', {
-            'fields': ('smart_contract', 'buyer', 'amount', 'payment_method', 'payment_status', 'blockchain_hash', 'transaction_fee')
-        }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at')
-        }),
-    )
+    # # Field grouping in the detailed view
+    # fieldsets = (
+    #     ('Transaction Details', {
+    #         'fields': ('smart_contract', 'buyer', 'amount', 'payment_method', 'payment_status', 'blockchain_hash', 'transaction_fee')
+    #     }),
+    #     ('Timestamps', {
+    #         'fields': ('created_at', 'updated_at')
+    #     }),
+    # )
 
     # Inline actions for bulk updates
     actions = ['mark_all_paid', 'mark_all_unpaid']

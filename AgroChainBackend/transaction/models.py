@@ -13,7 +13,7 @@ PAYMENT_METHOD_CHOICES = [
     
 class Transaction(models.Model):
    
-    smart_contract = models.ForeignKey(SmartContract, on_delete=models.CASCADE, related_name='transactions')
+    
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD_CHOICES)
     payment_status = models.BooleanField(default=False)
