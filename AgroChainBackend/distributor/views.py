@@ -9,7 +9,7 @@ from rest_framework import status
 from distributor.models import Distributor
 from agrochain.permission import IsDistributor
 from customUser.models import User
-from .serializers import DistributorLoginSerializer, DistributorProfileSerializer, DistributorRegistrationSerializer
+from .serializers import DistributorLoginSerializer, DistributorProfileSerializer, DistributorRegistrationSerializer, DistributorSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
     
@@ -66,6 +66,6 @@ class GetAllDistributor(APIView):
 
     def get(self, request):
         distributor = Distributor.objects.all()  # Retrieve all Customer records
-        serializer = DistributorProfileSerializer(distributor, many=True)  # Serialize the customer data
+        serializer = DistributorSerializer(distributor, many=True)  # Serialize the customer data
         return Response(serializer.data, status=status.HTTP_200_OK)  # Return the serialized data
                 

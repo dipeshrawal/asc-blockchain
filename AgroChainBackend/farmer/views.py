@@ -9,7 +9,7 @@ from rest_framework import status
 from farmer.models import Farmer
 from agrochain.permission import IsFarmer
 from customUser.models import User
-from .serializers import FarmerLoginSerializer, FarmerProfileSerializer, FarmerRegistrationSerializer
+from .serializers import FarmerLoginSerializer, FarmerProfileSerializer, FarmerRegistrationSerializer, FarmerSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 
@@ -64,6 +64,6 @@ class GetAllFarmer(APIView):
 
     def get(self, request):
         farmer = Farmer.objects.all()  # Retrieve all Customer records
-        serializer = FarmerProfileSerializer(farmer, many=True)  # Serialize the customer data
+        serializer = FarmerSerializer(farmer, many=True)  # Serialize the customer data
         return Response(serializer.data, status=status.HTTP_200_OK)  # Return the serialized data
                 
