@@ -54,11 +54,11 @@ const RetailerDashboard = () => {
               <p className="text-gray-600 mt-2">View details about products.</p>
             </Link>
             <Link
-              to="/realtimedataofproduct"
+              to="/retailerproductrate"
               className="block bg-yellow-100 hover:bg-yellow-200 p-6 text-center rounded-lg shadow-md transition"
             >
               <h3 className="text-xl font-semibold text-yellow-600">
-                Real-Time Data
+                 Rate of Product
               </h3>
               <p className="text-gray-600 mt-2">Monitor real-time product updates.</p>
             </Link>

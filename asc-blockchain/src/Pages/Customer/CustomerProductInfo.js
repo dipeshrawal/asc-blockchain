@@ -25,8 +25,8 @@ const CustomerProductInfo = () => {
   };
 
   const handleTransaction = (productId) => {
-    console.log(`Transaction clicked for Product ID: ${productId}`);
-    // Add your logic here
+    navigate('/customertransaction', { state: { productId } });
+    
   };
 
   return (

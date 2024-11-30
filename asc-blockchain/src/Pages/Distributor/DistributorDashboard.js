@@ -6,12 +6,6 @@ import agrochain from '../../assets/AgroChain.png'
 const DistributorDashboard = () => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove token from local storage
-    alert("Logged out successfully");
-    navigate("/login"); // Redirect to login page
-  };
-
   return (
     <div
       className="min-h-screen bg-cover bg-center"
@@ -63,11 +57,11 @@ const DistributorDashboard = () => {
               <p className="text-gray-600 mt-2">Access and update product details.</p>
             </Link>
             <Link
-              to="/realtimeproductdata"
+              to="/distributorproductrate"
               className="block bg-purple-100 hover:bg-purple-200 p-6 text-center rounded-lg shadow-md transition"
             >
               <h3 className="text-xl font-semibold text-purple-600">
-                Real-Time Product Data
+                Rate of Product
               </h3>
               <p className="text-gray-600 mt-2">
                 Monitor real-time updates on product status.

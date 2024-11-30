@@ -69,10 +69,11 @@ const DistributorProductInfo = () => {
                 <tr className="bg-blue-500 text-white text-left">
                   <th className="px-4 py-2">Product ID</th>
                   <th className="px-4 py-2">Product Name</th>
-                  <th className="px-4 py-2">Description</th>
+                  
                   <th className="px-4 py-2">Price</th>
                   <th className="px-4 py-2">Quantity</th>
                   <th className="px-4 py-2">Category</th>
+                  <th className="px-4 py-2">QR Code</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,10 +81,21 @@ const DistributorProductInfo = () => {
                   <tr key={product.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                     <td className="border px-4 py-2">{product.id}</td>
                     <td className="border px-4 py-2">{product.name}</td>
-                    <td className="border px-4 py-2">{product.description}</td>
-                    <td className="border px-4 py-2">${product.price}</td>
+                    
+                    <td className="border px-4 py-2">Rs. {product.price_per_kg}</td>
                     <td className="border px-4 py-2">{product.quantity}</td>
                     <td className="border px-4 py-2">{product.category}</td>
+                    <td className="py-3 px-4 text-gray-700">
+                  {product.qr_code ? (
+                    <img
+                      src={`http://127.0.0.1:8000${product.qr_code}`}
+                      alt={`QR Code for ${product.name}`}
+                      className="h-16 w-16 object-contain"
+                    />
+                  ) : (
+                    <span className="text-gray-500">No QR Code</span>
+                  )}
+                </td>
                   </tr>
                 ))}
               </tbody>

@@ -53,7 +53,7 @@ const FarmerNavbar = () => {
                     </li>
                     <li>
                     <Link
-                        to="/rateofproducts"
+                        to="/farmerproductrate"
                         className="text-white text-lg hover:text-blue-300 transition"
                     >
                         Rate of Product

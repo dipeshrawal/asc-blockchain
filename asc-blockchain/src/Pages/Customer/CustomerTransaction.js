@@ -1,24 +1,76 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-// import Navbar from '../Farmer/FarmerNavbar';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Navbar from './CustomerNavbar';
 
-const Transaction = () => {
-  const [amount, setAmount] = useState('');
+const CustomerTransaction = () => {
+  const [pricePerKg, setPricePerKg] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const [paymentStatus, setPaymentStatus] = useState(false);
-  const [blockchainHash, setBlockchainHash] = useState('');
-  const [transactionFee, setTransactionFee] = useState('');
+  const [blockchainHash, setBlockchainHash] = useState('0');
+  const [transactionFee, setTransactionFee] = useState('10');
   const [smartContract, setSmartContract] = useState('');
   const [buyer, setBuyer] = useState('');
   const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const location = useLocation();
+  const { productId } = location.state || {};
+
+  // Fetch price_per_kg and smart_contract_id for the selected product
+  useEffect(() => {
+    if (productId) {
+      const fetchProductDetails = async () => {
+        try {
+          // Fetch product details
+          const productResponse = await axios.get(
+            `http://127.0.0.1:8000/api/customer-products/${productId}/`
+          );
+          setPricePerKg(productResponse.data.price_per_kg);
+
+          const token = localStorage.getItem("token");
+
+        if (!token) {
+          setError("You need to log in to add products.");
+          setLoading(false);
+          return;
+        }
+
+        // Fetch farmer profile
+        const response = await axios.get("http://127.0.0.1:8000/api/customer/profile/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // Set customer ID
+        setBuyer(response.data.id);
+
+          // Fetch smart contract details
+          const smartContractResponse = await axios.get(
+            `http://127.0.0.1:8000/api/customer-smart-contracts/${productId}/`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+            }
+          );
+          setSmartContract(smartContractResponse.data.smart_contract_id);
+        } catch (error) {
+          console.error('Error fetching product or smart contract details:', error);
+        }
+      };
+
+      fetchProductDetails();
+    }
+  }, [productId]);
 
   // Fetch customers for the 'buyer' field
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/transactions/');
-        setCustomers(response.data);  // Assuming the API returns a list of customers
+        const response = await axios.get('http://127.0.0.1:8000/api/customer/profile/');
+        setCustomers(response.data);
       } catch (error) {
         console.error('Error fetching customers:', error);
       }
@@ -31,13 +83,12 @@ const Transaction = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/transactions/', {
-        amount,
+      const response = await axios.post('http://127.0.0.1:8000/api/customer-transactions/', {
+        amount: pricePerKg,
         payment_method: paymentMethod,
         payment_status: paymentStatus,
         blockchain_hash: blockchainHash,
         transaction_fee: transactionFee,
-        smart_contract: smartContract,
         buyer,
       });
 
@@ -54,23 +105,21 @@ const Transaction = () => {
 
   return (
     <div className="bg-[#eaf0e1]">
-      {/* <Navbar /> */}
+        <Navbar/>
       <div className="w-full max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg mt-6">
         <h1 className="text-3xl font-semibold text-center text-gray-700 mb-4">Add Transaction</h1>
         <form onSubmit={handleSubmit}>
-          {/* Amount */}
+          {/* Amount (Price Per Kg) */}
           <div className="mb-4">
             <label className="block text-lg font-medium text-gray-600" htmlFor="amount">
-              Amount*
+              Amount (Price Per Kg)*
             </label>
             <input
               id="amount"
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter amount"
-              required
+              type="text"
+              value={pricePerKg}
+              disabled
+              className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none bg-gray-100"
             />
           </div>
 
@@ -92,39 +141,6 @@ const Transaction = () => {
             </select>
           </div>
 
-          {/* Payment Status */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-600" htmlFor="paymentStatus">
-              Payment Status*
-            </label>
-            <select
-              id="paymentStatus"
-              value={paymentStatus}
-              onChange={(e) => setPaymentStatus(e.target.value === 'true')}
-              className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            >
-              <option value="true">Paid</option>
-              <option value="false">Unpaid</option>
-            </select>
-          </div>
-
-          {/* Blockchain Hash */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-600" htmlFor="blockchainHash">
-              Blockchain Hash*
-            </label>
-            <input
-              id="blockchainHash"
-              type="text"
-              value={blockchainHash}
-              onChange={(e) => setBlockchainHash(e.target.value)}
-              className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter blockchain hash"
-              required
-            />
-          </div>
-
           {/* Transaction Fee */}
           <div className="mb-4">
             <label className="block text-lg font-medium text-gray-600" htmlFor="transactionFee">
@@ -133,26 +149,11 @@ const Transaction = () => {
             <input
               id="transactionFee"
               type="number"
+              disabled
               value={transactionFee}
               onChange={(e) => setTransactionFee(e.target.value)}
               className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Enter transaction fee"
-              required
-            />
-          </div>
-
-          {/* Smart Contract */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-600" htmlFor="smartContract">
-              Smart Contract ID*
-            </label>
-            <input
-              id="smartContract"
-              type="number"
-              value={smartContract}
-              onChange={(e) => setSmartContract(e.target.value)}
-              className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter smart contract ID"
               required
             />
           </div>
@@ -162,20 +163,16 @@ const Transaction = () => {
             <label className="block text-lg font-medium text-gray-600" htmlFor="buyer">
               Buyer*
             </label>
-            <select
+            <input
               id="buyer"
               value={buyer}
+              disabled
               onChange={(e) => setBuyer(e.target.value)}
               className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
-            >
-              <option value="">Select a buyer</option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
+            />
+              
+                
           </div>
 
           <button
@@ -190,5 +187,4 @@ const Transaction = () => {
   );
 };
 
-export default Transaction;
-
+export default CustomerTransaction;

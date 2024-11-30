@@ -47,7 +47,7 @@ const FarmerDashboard = () => {
               <p className="text-gray-600 mt-2">View and manage your products.</p>
             </Link>
             <Link
-              to="/rateofproducts"
+              to="/farmerproductrate"
               className="block bg-yellow-100 hover:bg-yellow-200 p-6 text-center rounded-lg shadow-md transition"
             >
               <h3 className="text-xl font-semibold text-yellow-600">

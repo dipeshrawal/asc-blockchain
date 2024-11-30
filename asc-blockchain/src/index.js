@@ -27,7 +27,6 @@ import FarmerRegister from './Pages/Farmer/FarmerRegister';
 import DistributorRegister from './Pages/Distributor/DistributorRegister';
 import RetailerRegister from './Pages/Retailer/RetailerRegister';
 import SmartContract from './Pages/Farmer/SmartContract';
-import Transaction from './Transaction';
 import DistributorSmartContract from './Pages/Distributor/DistributorSmartContract';
 import RetailerSmartContract from './Pages/Retailer/RetailerSmartContract';
 import FarmerProductInfo from './Pages/Farmer/FarmerProductInfo';
@@ -40,6 +39,10 @@ import CustomerProductrate from './Pages/Customer/CustomerProductrate';
 import FarmerDistributorData from './Pages/Farmer/FarmerDistributorData';
 import FarmerRetailerData from './Pages/Farmer/FarmerRetailerData';
 import RetailerDistributorData from './Pages/Retailer/RetailerDistributorData';
+import FarmerProductrate from './Pages/Farmer/FarmerProductrate';
+import RetailerProductrate from './Pages/Retailer/RetailerProductrate';
+import DistributorProductrate from './Pages/Distributor/DistributorProductrate';
+import CustomerTransaction from './Pages/Customer/CustomerTransaction';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -68,8 +71,7 @@ root.render(
       <Route path="/farmerregister" element={<FarmerRegister />} />      
       <Route path="/distributorregister" element={<DistributorRegister />} />      
       <Route path="/retailerregister" element={<RetailerRegister />} />      
-      <Route path="/smartcontract" element={<SmartContract />} />      
-      <Route path="/transaction" element={<Transaction />} />      
+      <Route path="/smartcontract" element={<SmartContract />} />         
       <Route path="/distributorsmartcontract" element={<DistributorSmartContract />} />      
       <Route path="/retailersmartcontract" element={<RetailerSmartContract />} />      
       <Route path="/farmerproductinfo" element={<FarmerProductInfo />} />      
@@ -82,6 +84,10 @@ root.render(
       <Route path="/farmerdistributordata" element={<FarmerDistributorData />} />      
       <Route path="/farmerretailerdata" element={<FarmerRetailerData />} />      
       <Route path="/retailerdistributordata" element={<RetailerDistributorData />} />      
+      <Route path="/farmerproductrate" element={<FarmerProductrate />} />      
+      <Route path="/retailerproductrate" element={<RetailerProductrate />} />      
+      <Route path="/distributorproductrate" element={<DistributorProductrate />} />      
+      <Route path="/customertransaction" element={<CustomerTransaction />} />      
        
 
     </Routes>

@@ -5,7 +5,7 @@ import Navbar from './CustomerNavbar';
 
 const CustomerSmartContract = () => {
   const { state } = useLocation(); // Get the passed state with productId
-  const productId = state?.productId; // Retrieve the productId
+  const productId = state?.productId; // Retrieve the productId if available
   const navigate = useNavigate();
 
   const [contracts, setContracts] = useState([]);
@@ -15,10 +15,12 @@ const CustomerSmartContract = () => {
     const fetchContracts = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/customer-smart-contracts/');
-        // Filter contracts with the matching productId
-        const filteredContracts = response.data.filter(
-          (contract) => contract.product === productId
-        );
+        
+        // If productId is passed (navigating from another page), filter by productId
+        const filteredContracts = productId
+          ? response.data.filter((contract) => contract.product === productId)
+          : response.data.filter((contract) => contract.status === true); 
+
         setContracts(filteredContracts);
       } catch (error) {
         console.error('Error fetching contracts:', error);
@@ -34,7 +36,9 @@ const CustomerSmartContract = () => {
       <Navbar />
       <div className="container mx-auto py-8">
         <h1 className="text-3xl font-semibold text-center text-gray-700 mb-4">
-          Active Smart Contracts for Product ID: {productId}
+          {productId
+            ? `Active Smart Contracts for Product ID: ${productId}`
+            : 'All Active Smart Contracts'}
         </h1>
         {errorMessage && <p className="text-red-600 text-center">{errorMessage}</p>}
         {contracts.length > 0 ? (
@@ -54,13 +58,21 @@ const CustomerSmartContract = () => {
               </thead>
               <tbody>
                 {contracts.map((contract, index) => (
-                  <tr key={contract.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+                  <tr
+                    key={contract.id}
+                    className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
+                    onClick={() =>
+                      navigate(`/customersmartcontract`, {
+                        state: { productId: contract.product }, // Pass the productId when navigating
+                      })
+                    }
+                  >
                     <td className="border px-4 py-2">{contract.id}</td>
                     <td className="border px-4 py-2">{contract.contract_type}</td>
                     <td className="border px-4 py-2">{contract.initiator}</td>
                     <td className="border px-4 py-2">{contract.receiver}</td>
                     <td className="border px-4 py-2">{contract.product}</td>
-                    <td className="border px-4 py-2">Active</td>
+                    <td className="border px-4 py-2">{contract.status ? 'Active' : 'Inactive'}</td>
                     <td className="border px-4 py-2">{contract.valid_until}</td>
                     <td className="border px-4 py-2">{new Date(contract.created_at).toLocaleDateString()}</td>
                   </tr>
@@ -69,7 +81,9 @@ const CustomerSmartContract = () => {
             </table>
           </div>
         ) : (
-          <p className="text-center text-gray-600 mt-8">No active contracts available for this product.</p>
+          <p className="text-center text-gray-600 mt-8">
+            No active contracts available.
+          </p>
         )}
       </div>
     </div>

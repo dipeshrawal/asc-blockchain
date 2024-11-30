@@ -45,7 +45,7 @@ const RetailerNavbar = () => {
                     </li>
                     <li>
                     <Link
-                        to="/rateofproducts"
+                        to="/retailerproductrate"
                         className="text-white text-lg hover:text-blue-300 transition"
                     >
                         Rate of Product
