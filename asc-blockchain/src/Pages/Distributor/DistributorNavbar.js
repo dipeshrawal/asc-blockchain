@@ -58,6 +58,14 @@ const DistributorNavbar = () => {
             </li>
             <li>
               <Link
+                to="/distributortransaction"
+                className="text-white text-lg hover:text-purple-300 transition"
+              >
+                Transaction Data
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/distributorprofile"
                 className="text-white text-lg hover:text-purple-300 transition"
               >

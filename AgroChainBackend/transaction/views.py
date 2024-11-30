@@ -44,7 +44,7 @@ class CustomerTransactionAPIView(APIView):
         
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(initiator=request.user)  # Assuming `initiator` is the logged-in user
+            serializer.save()  # Assuming `initiator` is the logged-in user
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -72,7 +72,7 @@ class DistributorTransactionAPIView(APIView):
                 return Response({"detail": "Transaction not found."}, status=status.HTTP_404_NOT_FOUND)
         else:
             
-            transactions = Transaction.objects.filter.all()
+            transactions = Transaction.objects.all()
             serializer = TransactionSerializer(transactions, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -99,9 +99,25 @@ class RetailerTransactionAPIView(APIView):
                 return Response({"detail": "Transaction not found."}, status=status.HTTP_404_NOT_FOUND)
         else:
             
-            transactions = Transaction.objects.filter.all()
+            transactions = Transaction.objects.all()
             serializer = TransactionSerializer(transactions, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+        
+    def patch(self, request, pk=None, *args, **kwargs):
+        """
+        Partially update a contract by ID.
+        """
+        try:
+            transaction = Transaction.objects.get(pk=pk)
+        except Transaction.DoesNotExist:
+            return Response({"detail": "Transaction not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        
+        serializer = TransactionSerializer(transaction, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 
@@ -125,6 +141,8 @@ class FarmerTransactionAPIView(APIView):
                     return Response({"detail": "Transaction not found."}, status=status.HTTP_404_NOT_FOUND)
             else:
                 
-                transactions = Transaction.objects.filter.all()
+                transactions = Transaction.objects.all()
                 serializer = TransactionSerializer(transactions, many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
+            
+    

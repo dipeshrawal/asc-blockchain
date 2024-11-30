@@ -17,7 +17,7 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD_CHOICES)
     payment_status = models.BooleanField(default=False)
-    blockchain_hash = models.CharField(max_length=66)  # Ethereum hash length
+    blockchain_hash = models.CharField(max_length=66, default=None,null=True)  # Ethereum hash length
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     transaction_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0)

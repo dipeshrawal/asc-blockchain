@@ -53,6 +53,14 @@ const RetailerNavbar = () => {
                     </li>
                     <li>
                     <Link
+                        to="/retailertransaction"
+                        className="text-white text-lg hover:text-blue-300 transition"
+                    >
+                        Transaction Data
+                    </Link>
+                    </li>
+                    <li>
+                    <Link
                         to="/retailersmartcontract"
                         className="text-white text-lg hover:text-blue-300 transition"
                     >

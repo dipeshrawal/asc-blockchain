@@ -53,7 +53,7 @@ const UserDashboard = () => {
             </p>
           </Link>
           <Link
-            to="/rateofproducts"
+            to="/customerproductrate"
             className="block bg-yellow-100 hover:bg-yellow-200 p-6 text-center rounded-lg shadow-md transition"
           >
             <h3 className="text-xl font-semibold text-yellow-600">

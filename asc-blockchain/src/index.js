@@ -43,6 +43,10 @@ import FarmerProductrate from './Pages/Farmer/FarmerProductrate';
 import RetailerProductrate from './Pages/Retailer/RetailerProductrate';
 import DistributorProductrate from './Pages/Distributor/DistributorProductrate';
 import CustomerTransaction from './Pages/Customer/CustomerTransaction';
+import CustomerTransactionData from './Pages/Customer/CustomerTransactiondata';
+import FarmerTransaction from './Pages/Farmer/FarmerTransaction';
+import DistributorTransaction from './Pages/Distributor/DistributorTransaction';
+import RetailerTransaction from './Pages/Retailer/RetailerTransaction';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -88,6 +92,10 @@ root.render(
       <Route path="/retailerproductrate" element={<RetailerProductrate />} />      
       <Route path="/distributorproductrate" element={<DistributorProductrate />} />      
       <Route path="/customertransaction" element={<CustomerTransaction />} />      
+      <Route path="/customertransactiondata" element={<CustomerTransactionData />} />      
+      <Route path="/farmertransaction" element={<FarmerTransaction />} />      
+      <Route path="/distributortransaction" element={<DistributorTransaction />} />      
+      <Route path="/retailertransaction" element={<RetailerTransaction />} />      
        
 
     </Routes>

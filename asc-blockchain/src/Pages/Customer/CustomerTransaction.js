@@ -50,9 +50,7 @@ const CustomerTransaction = () => {
           // Fetch smart contract details
           const smartContractResponse = await axios.get(
             `http://127.0.0.1:8000/api/customer-smart-contracts/${productId}/`,{
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
+                
             }
           );
           setSmartContract(smartContractResponse.data.smart_contract_id);
@@ -81,12 +79,15 @@ const CustomerTransaction = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/customer-transactions/', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
         amount: pricePerKg,
         payment_method: paymentMethod,
-        payment_status: paymentStatus,
         blockchain_hash: blockchainHash,
         transaction_fee: transactionFee,
         buyer,
@@ -94,6 +95,7 @@ const CustomerTransaction = () => {
 
       if (response.status === 201) {
         alert('Transaction Added successfully');
+        setPaymentMethod('');
       } else {
         alert('Failed to add transaction');
       }

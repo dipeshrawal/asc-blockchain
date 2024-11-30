@@ -68,6 +68,14 @@ const CustomerNavbar = () => {
             </li>
             <li>
               <Link
+                to="/customertransactiondata"
+                className="text-white text-lg hover:text-blue-300 transition"
+              >
+                Transaction Data
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/customerprofile"
                 className="text-white text-lg hover:text-blue-300 transition"
               >

@@ -9,7 +9,7 @@ function CustomerRegister() {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setConfirmPassword] = useState("");
-  const [walletaddress, setWalletAddress] = useState("123");
+  const [walletaddress, setWalletAddress] = useState("12");
   const [userType, setUserType] = useState("customer");
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();

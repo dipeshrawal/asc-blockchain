@@ -61,6 +61,14 @@ const FarmerNavbar = () => {
                     </li>
                     <li>
                     <Link
+                        to="/farmertransaction"
+                        className="text-white text-lg hover:text-blue-300 transition"
+                    >
+                        Transaction Data
+                    </Link>
+                    </li>
+                    <li>
+                    <Link
                         to="/farmerproductinfo"
                         className="text-white text-lg hover:text-blue-300 transition"
                     >
