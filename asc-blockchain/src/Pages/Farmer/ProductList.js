@@ -77,7 +77,17 @@ const ProductList = () => {
                   <td className="py-3 px-4 text-gray-700">{product.price_per_kg}</td>
                   <td className="py-3 px-4 text-gray-700">{product.quantity}</td>
                   <td className="py-3 px-4 text-gray-700">{product.batch_number}</td>
-                  {/* <td className="py-3 px-4 text-gray-700">{product.qr_code}</td> */}
+                  <td className="py-3 px-4 text-gray-700">
+                    {product.qr_code ? (
+                      <img
+                        src={`http://127.0.0.1:8000${product.qr_code}`}
+                        alt={`QR Code for ${product.name}`}
+                        className="h-16 w-16 object-contain"
+                      />
+                    ) : (
+                      <span className="text-gray-500">No QR Code</span>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
