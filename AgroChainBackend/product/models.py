@@ -1,6 +1,8 @@
 from io import BytesIO
 from django.db import models
 import qrcode
+from django.core.files import File
+
 
 from smartContract.models import *
 from farmer.models import Farmer
@@ -29,7 +31,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.qr_code or self._state.adding or self.has_changes():
-            qr_data = f"Product: {self.name or 'N/A'}, Price: {self.price or '0.00'}, Description: {self.description or 'No description'}"
+            qr_data = f"Product: {self.name or 'N/A'}, Price: {self.price_per_kg or '0.00'}, Batch Number: {self.price_per_kg or '0.00'},Category: {self.category or '0.00'} , Quality Certification: {self.quality_certifications or '0.00'}, Harvest Date: {self.harvest_date or '0.00'}"
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_L,
