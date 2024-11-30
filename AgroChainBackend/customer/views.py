@@ -9,7 +9,7 @@ from customer.models import Customer
 from agrochain.permission import IsCustomer
 
 from customUser.models import User
-from .serializers import CustomerLoginSerializer, CustomerProfileSerializer, CustomerRegistrationSerializer
+from .serializers import CustomerLoginSerializer, CustomerProfileSerializer, CustomerRegistrationSerializer, CustomerSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 
@@ -64,5 +64,5 @@ class GetAllCustomer(APIView):
 
     def get(self, request):
         customers = Customer.objects.all()  # Retrieve all Customer records
-        serializer = CustomerProfileSerializer(customers, many=True)  # Serialize the customer data
+        serializer = CustomerSerializer(customers, many=True)  # Serialize the customer data
         return Response(serializer.data, status=status.HTTP_200_OK)  # Return the serialized data
