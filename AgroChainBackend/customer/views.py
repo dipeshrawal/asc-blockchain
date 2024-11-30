@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from customer.models import Customer
 from agrochain.permission import IsCustomer
 
 from customUser.models import User
@@ -42,7 +43,7 @@ class CustomerLoginView(APIView):
             token = get_tokens_for_user(user)
 
             return Response({
-                'token': token['access'],
+                'token': token,
                 'msg': "Customer logged in successfully"
             }, status=status.HTTP_200_OK)
 
@@ -54,3 +55,14 @@ class CustomerProfileView(APIView):
     def get(self,request,format=None):
         serializer = CustomerProfileSerializer(request.user)
         return Response(serializer.data,status=status.HTTP_200_OK)
+    
+
+class GetAllCustomer(APIView):
+    """
+    Retrieve all customers from the database.
+    """
+
+    def get(self, request):
+        customers = Customer.objects.all()  # Retrieve all Customer records
+        serializer = CustomerProfileSerializer(customers, many=True)  # Serialize the customer data
+        return Response(serializer.data, status=status.HTTP_200_OK)  # Return the serialized data

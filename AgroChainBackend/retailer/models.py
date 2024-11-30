@@ -11,4 +11,4 @@ class Retailer(User):
     business_license = models.CharField(max_length=255)
     wallet_address = models.CharField(max_length=255, unique=True)
     store_type = models.CharField(max_length=255)
-    inventory_capacity = models.CharField(max_length=20)
+    inventory_capacity = models.IntegerField()  # Changed to IntegerField for better representation

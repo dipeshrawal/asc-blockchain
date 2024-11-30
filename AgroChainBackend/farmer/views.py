@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from farmer.models import Farmer
 from agrochain.permission import IsFarmer
 from customUser.models import User
 from .serializers import FarmerLoginSerializer, FarmerProfileSerializer, FarmerRegistrationSerializer
@@ -44,7 +45,7 @@ class FarmerLoginView(APIView):
             token = get_tokens_for_user(user)
 
             return Response({
-                'token': token['access'],
+                'token': token,
                 'msg': "Customer logged in successfully"
             }, status=status.HTTP_200_OK)
 
@@ -56,4 +57,13 @@ class FarmerProfileView(APIView):
         serializer = FarmerProfileSerializer(request.user)
         return Response(serializer.data,status=status.HTTP_200_OK)
     
-    
+class GetAllFarmer(APIView):
+    """
+    Retrieve all customers from the database.
+    """
+
+    def get(self, request):
+        farmer = Farmer.objects.all()  # Retrieve all Customer records
+        serializer = FarmerProfileSerializer(farmer, many=True)  # Serialize the customer data
+        return Response(serializer.data, status=status.HTTP_200_OK)  # Return the serialized data
+                
