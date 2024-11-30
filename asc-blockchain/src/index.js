@@ -36,6 +36,7 @@ import CustomerProductInfo from './Pages/Customer/CustomerProductInfo';
 import CustomerProfile from './Pages/Customer/CustomerProfile';
 import DistributorProfile from './Pages/Distributor/DistributorProfile';
 import RetailerProfile from './Pages/Retailer/RetailerProfile';
+import CustomerProductrate from './Pages/Customer/CustomerProductrate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -73,7 +74,7 @@ root.render(
       <Route path="/customerproductinfo" element={<CustomerProductInfo />} />   
       <Route path="/customerprofile" element={<CustomerProfile />} />      
       <Route path="/distributorprofile" element={<DistributorProfile />} />      
-      <Route path="/retailerprofile" element={<RetailerProfile />} />      
+      <Route path="/customerproductrate" element={<CustomerProductrate />} />      
 
     </Routes>
   </Router>

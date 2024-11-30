@@ -60,7 +60,7 @@ const CustomerNavbar = () => {
             </li>
             <li>
               <Link
-                to="/distributordata"
+                to="/customerproductrate"
                 className="text-white text-lg hover:text-blue-300 transition"
               >
                 Rate of Product

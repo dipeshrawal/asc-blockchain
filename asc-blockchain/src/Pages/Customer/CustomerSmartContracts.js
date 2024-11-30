@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './CustomerNavbar';
 
 const CustomerSmartContract = () => {
+  const { state } = useLocation(); // Get the passed state with productId
+  const productId = state?.productId; // Retrieve the productId
+  const navigate = useNavigate();
+
   const [contracts, setContracts] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Fetch smart contract data from the API
   useEffect(() => {
     const fetchContracts = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/customer-smart-contracts/');
-        // Filter contracts with active status only
-        const activeContracts = response.data.filter((contract) => contract.status === true);
-        setContracts(activeContracts);
+        // Filter contracts with the matching productId
+        const filteredContracts = response.data.filter(
+          (contract) => contract.product === productId
+        );
+        setContracts(filteredContracts);
       } catch (error) {
         console.error('Error fetching contracts:', error);
         setErrorMessage('Failed to fetch smart contract data.');
@@ -21,13 +27,15 @@ const CustomerSmartContract = () => {
     };
 
     fetchContracts();
-  }, []);
+  }, [productId]); // Re-fetch when productId changes
 
   return (
     <div className="bg-[#eaf0e1] min-h-screen">
       <Navbar />
       <div className="container mx-auto py-8">
-        <h1 className="text-3xl font-semibold text-center text-gray-700 mb-4">Active Smart Contracts</h1>
+        <h1 className="text-3xl font-semibold text-center text-gray-700 mb-4">
+          Active Smart Contracts for Product ID: {productId}
+        </h1>
         {errorMessage && <p className="text-red-600 text-center">{errorMessage}</p>}
         {contracts.length > 0 ? (
           <div className="overflow-x-auto">
@@ -61,7 +69,7 @@ const CustomerSmartContract = () => {
             </table>
           </div>
         ) : (
-          <p className="text-center text-gray-600 mt-8">No active contracts available.</p>
+          <p className="text-center text-gray-600 mt-8">No active contracts available for this product.</p>
         )}
       </div>
     </div>
