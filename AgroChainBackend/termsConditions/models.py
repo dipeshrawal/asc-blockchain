@@ -18,7 +18,7 @@ class TermsAndConditions(models.Model):
     privacy_policy_link = models.URLField(null=True, blank=True)
     cookies_policy_link = models.URLField(null=True, blank=True)
     governing_law = models.CharField(max_length=100, null=True, blank=True)
-    image = models.ImageField(upload_to='termsConditions_images/', blank=True, null=True, help_text="Upload a full image of the product")
+    
    
     def __str__(self):
         return self.title

@@ -11,7 +11,6 @@ class About(models.Model):
     website_url = models.URLField(blank=True, null=True, help_text="Official website link")
     created_at = models.DateTimeField(auto_now_add=True, help_text="Time when the record was created")
     updated_at = models.DateTimeField(auto_now=True, help_text="Time when the record was last updated")
-    image = models.ImageField(upload_to='about_images/', blank=True, null=True, help_text="Upload a full image of the product")
-
+    
     def __str__(self):
         return self.title
