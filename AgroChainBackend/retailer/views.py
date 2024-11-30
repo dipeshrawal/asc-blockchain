@@ -28,7 +28,7 @@ class RetailerRegistrationView(APIView):
             serializer.save()
             token=get_tokens_for_user(User)
             return Response({
-                'token':token['access'],
+                'token':token,
                 'msg':"Retailer created successfully"
             },status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
@@ -45,7 +45,7 @@ class RetailerLoginView(APIView):
             token = get_tokens_for_user(user)
 
             return Response({
-                'token': token,
+                'token': token['access'],
                 'msg': "retailer logged in successfully"
             }, status=status.HTTP_200_OK)
 
