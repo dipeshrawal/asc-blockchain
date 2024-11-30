@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from retailer.models import Retailer
 from agrochain.permission import IsRetailer
 from customUser.models import User
-from .serializers import RetailerLoginSerializer, RetailerProfileSerializer, RetailerRegistrationSerializer
+from .serializers import RetailerLoginSerializer, RetailerProfileSerializer, RetailerRegistrationSerializer, RetailerSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 
 def get_tokens_for_user(user):
@@ -66,5 +66,5 @@ class GetAllRetailer(APIView):
 
     def get(self, request):
         retailer = Retailer.objects.all()  # Retrieve all Customer records
-        serializer = RetailerProfileSerializer(retailer, many=True)  # Serialize the customer data
+        serializer = RetailerSerializer(retailer, many=True)  # Serialize the customer data
         return Response(serializer.data, status=status.HTTP_200_OK)  # Return the serialized data
