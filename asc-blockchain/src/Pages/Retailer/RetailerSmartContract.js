@@ -9,6 +9,7 @@ const RetailerSmartContract = () => {
   const [error, setError] = useState(null); // Track errors
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const itemsPerPage = 10; // Number of items per page
+  const [retailerId, setRetailerId] = useState(null); // Track retailer ID
 
   useEffect(() => {
     const fetchContracts = async () => {
@@ -21,9 +22,20 @@ const RetailerSmartContract = () => {
           },
         };
 
-        // Fetch all contracts without filtering by retailer ID
+        // Fetch the retailer's profile to get their ID
+        const profileResponse = await axios.get('http://127.0.0.1:8000/api/retailer/profile', config);
+        const retailerId = profileResponse.data.id;
+        setRetailerId(retailerId);
+
+        // Fetch all contracts
         const contractsResponse = await axios.get('http://127.0.0.1:8000/api/retailer-smart-contracts/', config);
-        setContracts(contractsResponse.data);
+        
+        // Filter contracts where the receiver matches the logged-in retailer's ID
+        const retailerContracts = contractsResponse.data.filter(
+          (contract) => contract.receiver === retailerId
+        );
+        
+        setContracts(retailerContracts);
       } catch (error) {
         console.error('Error fetching contracts:', error);
         setErrorMessage('Failed to load contracts. Please try again.');
@@ -45,13 +57,11 @@ const RetailerSmartContract = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      // Fetch the retailer's profile to get their ID
-      const profileResponse = await axios.get('http://127.0.0.1:8000/api/retailer/profile', config);
-      const retailerId = profileResponse.data.id;
+      
       // Update the retailer_approved field to true
       await axios.patch(
         `http://127.0.0.1:8000/api/retailer-smart-contracts/${contractId}/`,
-        { retailer_approved: true, receiver : retailerId}
+        { retailer_approved: true}
       );
 
       // Update the contract in the state without refetching all contracts
@@ -59,6 +69,9 @@ const RetailerSmartContract = () => {
         contract.id === contractId ? { ...contract, retailer_approved: true } : contract
       );
       setContracts(updatedContracts);
+      
+      // Refresh the page to reflect changes (option 1)
+      window.location.reload();
     } catch (error) {
       console.error('Error approving contract:', error);
       setErrorMessage('Failed to approve contract.');

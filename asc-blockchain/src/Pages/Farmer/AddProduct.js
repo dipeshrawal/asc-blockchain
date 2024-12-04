@@ -13,6 +13,13 @@ const AddProducts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Generate a unique batch number
+  const generateBatchNumber = () => {
+    const timestamp = new Date().getTime(); // Current time in milliseconds
+    const randomString = Math.random().toString(36).substring(2, 8); // Random alphanumeric string
+    return `BN-${timestamp}-${randomString}`;
+  };
+
   // Fetch farmer's ID on component mount
   useEffect(() => {
     const fetchFarmerData = async () => {
@@ -35,6 +42,9 @@ const AddProducts = () => {
         // Set farmer ID
         setFarmer(response.data.id);
         setLoading(false);
+
+        // Generate an initial batch number
+        setBatchNumber(generateBatchNumber());
       } catch (err) {
         console.error("Error fetching farmer profile:", err);
         setError("Unable to fetch farmer data.");
@@ -70,7 +80,7 @@ const AddProducts = () => {
         setQuantity("");
         setHarvestDate("");
         setPricePerKg("");
-        setBatchNumber("");
+        setBatchNumber(generateBatchNumber()); // Generate a new batch number
       } else {
         alert(`Failed adding product. Status: ${response.status}`);
       }
@@ -143,7 +153,7 @@ const AddProducts = () => {
           {/* Quantity */}
           <div className="mb-4">
             <label className="block text-lg font-medium text-gray-600" htmlFor="quantity">
-              Quantity*
+              Quantity Per KG*
             </label>
             <input
               id="quantity"
@@ -196,24 +206,9 @@ const AddProducts = () => {
               id="batchNumber"
               type="text"
               value={batchNumber}
-              onChange={(e) => setBatchNumber(e.target.value)}
-              className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter batch number"
-              required
-            />
-          </div>
-
-          {/* Farmer ID */}
-          <div className="mb-6">
-            <label className="block text-lg font-medium text-gray-600" htmlFor="farmer">
-              Farmer ID*
-            </label>
-            <input
-              id="farmer"
-              type="text"
-              value={farmer}
               readOnly
-              className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm bg-gray-100 focus:outline-none"
+              className="mt-2 p-3 w-full border border-gray-300 bg-gray-100 rounded-lg shadow-sm focus:outline-none"
+              placeholder="Generated automatically"
             />
           </div>
 

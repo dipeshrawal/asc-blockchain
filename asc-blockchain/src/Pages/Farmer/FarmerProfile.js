@@ -77,6 +77,7 @@ const FarmerProfile = () => {
                 <span className="text-lg font-medium text-gray-700">User Type:</span>
                 <span className="text-lg text-gray-900">{profile.user_type}</span>
               </div>
+              
             </div>
               
               

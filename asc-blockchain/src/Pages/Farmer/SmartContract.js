@@ -6,33 +6,43 @@ import Navbar from "../Farmer/FarmerNavbar";
 const SmartContract = () => {
   const [contractType, setContractType] = useState("");
   const [product, setProduct] = useState("");
+  const [distributor, setDistributor] = useState("");
   const [products, setProducts] = useState([]);
-  const [termsAndConditions, setTermsAndConditions] = useState("");
-  const [paymentTerms, setPaymentTerms] = useState("");
+  const [distributors, setDistributors] = useState([]);
   const [validUntil, setValidUntil] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProductsAndDistributors = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/farmer-products/", {
+        // Fetch products
+        const productResponse = await axios.get("http://127.0.0.1:8000/api/farmer-products/", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setProducts(response.data);
+
+        // Fetch distributors
+        const distributorResponse = await axios.get("http://127.0.0.1:8000/api/distributor/distributor-all", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setProducts(productResponse.data);
+        setDistributors(distributorResponse.data);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching products:", error);
-        setErrorMessage("Failed to fetch products");
+        console.error("Error fetching data:", error);
+        setErrorMessage("Failed to fetch data");
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchProductsAndDistributors();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -43,10 +53,10 @@ const SmartContract = () => {
         "http://127.0.0.1:8000/api/farmer-smart-contracts/",
         {
           contract_type: contractType,
-          terms_and_conditions: termsAndConditions,
-          payment_terms: paymentTerms,
           valid_until: validUntil,
           product,
+          initiator:distributor,
+          farmer_approved: true,
         },
         {
           headers: {
@@ -60,8 +70,7 @@ const SmartContract = () => {
         navigate("/farmerproductinfo");
         setContractType("");
         setProduct("");
-        setTermsAndConditions("");
-        setPaymentTerms("");
+        setDistributor("");
         setValidUntil("");
       } else {
         setErrorMessage("Failed to add smart contract");
@@ -78,7 +87,7 @@ const SmartContract = () => {
       <div className="w-full max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg mt-6">
         <h1 className="text-3xl font-semibold text-center text-gray-700 mb-4">Add Smart Contract</h1>
         {errorMessage && <p className="text-red-600">{errorMessage}</p>}
-        {loading && <p className="text-gray-600 text-center">Loading products...</p>}
+        {loading && <p className="text-gray-600 text-center">Loading data...</p>}
         {!loading && products.length === 0 && (
           <p className="text-gray-600 text-center">No products found for this farmer.</p>
         )}
@@ -99,18 +108,7 @@ const SmartContract = () => {
                 <option value="">Select contract type</option>
                 <option value="SALE">Sale</option>
                 <option value="LEASE">Lease</option>
-                <option value="SERVICE">Service Agreement</option>
-                <option value="PARTNERSHIP">Partnership Agreement</option>
-                <option value="PURCHASE_ORDER">Purchase Order</option>
-                <option value="SUPPLY_AGREEMENT">Supply Agreement</option>
-                <option value="DISTRIBUTION">Distribution Agreement</option>
-                <option value="CONTRACT_FARMING">Contract Farming</option>
-                <option value="FRANCHISE">Franchise Agreement</option>
-                <option value="JOINT_VENTURE">Joint Venture Agreement</option>
-                <option value="CONSULTING">Consulting Agreement</option>
-                <option value="COOPERATIVE">Cooperative Agreement</option>
-                <option value="MEMORANDUM">Memorandum of Understanding</option>
-                <option value="OTHER">Other</option>
+                {/* Add other options as necessary */}
               </select>
             </div>
 
@@ -135,35 +133,28 @@ const SmartContract = () => {
               </select>
             </div>
 
-            {/* Terms and Conditions */}
+            {/* Distributor */}
             <div className="mb-4">
-              <label className="block text-lg font-medium text-gray-600" htmlFor="termsAndConditions">
-                Terms and Conditions*
+              <label className="block text-lg font-medium text-gray-600" htmlFor="distributor">
+                Distributor*
               </label>
-              <textarea
-                id="termsAndConditions"
-                value={termsAndConditions}
-                onChange={(e) => setTermsAndConditions(e.target.value)}
+              <select
+                id="distributor"
+                value={distributor}
+                onChange={(e) => setDistributor(e.target.value)}
                 className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder="Enter terms and conditions"
                 required
-              />
+              >
+                <option value="">Select distributor</option>
+                {distributors.map((dist) => (
+                  <option key={dist.id} value={dist.id}>
+                    {dist.id} - {dist.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            {/* Payment Terms */}
-            <div className="mb-4">
-              <label className="block text-lg font-medium text-gray-600" htmlFor="paymentTerms">
-                Payment Terms*
-              </label>
-              <textarea
-                id="paymentTerms"
-                value={paymentTerms}
-                onChange={(e) => setPaymentTerms(e.target.value)}
-                className="mt-2 p-3 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder="Enter payment terms"
-                required
-              />
-            </div>
+
 
             {/* Valid Until */}
             <div className="mb-4">

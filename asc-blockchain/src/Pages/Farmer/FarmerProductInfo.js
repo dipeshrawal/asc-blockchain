@@ -64,23 +64,7 @@ const FarmerProductInfo = () => {
     }
   }, [products]); // Re-fetch contracts when products are available
 
-  // Handle approval action for distributor
-  const handleApprove = async (contractId) => {
-    try {
-      await axios.patch(`http://127.0.0.1:8000/api/farmer-smart-contracts/${contractId}/`, {
-        farmer_approved: true,
-      });
 
-      // Update the contract in the state
-      const updatedContracts = contracts.map(contract =>
-        contract.id === contractId ? { ...contract, farmer_approved: true } : contract
-      );
-      setContracts(updatedContracts);
-    } catch (error) {
-      console.error('Error approving contract:', error);
-      setErrorMessage('Failed to approve contract.');
-    }
-  };
 
   return (
     <div className="bg-[#eaf0e1] min-h-screen">
@@ -100,7 +84,7 @@ const FarmerProductInfo = () => {
                 <th className="px-4 py-2">Status</th>
                 <th className="px-4 py-2">Valid Until</th>
                 <th className="px-4 py-2">Created At</th>
-                <th className="px-4 py-2">Actions</th>
+                <th className="px-4 py-2">Farmer Status</th>
               </tr>
             </thead>
             <tbody>
@@ -120,17 +104,9 @@ const FarmerProductInfo = () => {
                         {isExpired ? (
                           <span className="text-red-500">Expired</span>
                         ) : (
-                          !contract.farmer_approved ? (
-                            <button
-                              onClick={() => handleApprove(contract.id)}
-                              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                            >
-                              Approve
-                            </button>
-                          ) : (
-                            <span className="text-green-500">Approved</span>
+                          contract.farmer_approved ? 'Approved' : 'Inactive'
                           )
-                        )}
+                        }
                       </td>
                     </tr>
                   );

@@ -26,7 +26,7 @@ class SmartContractAdmin(admin.ModelAdmin):
     # Field grouping in the detailed view
     fieldsets = (
         ('Contract Details', {
-            'fields': ('contract_type', 'initiator', 'receiver', 'product', 'terms_and_conditions', 'payment_terms', 'valid_until')
+            'fields': ('contract_type', 'initiator', 'receiver', 'product','valid_until')
         }),
         ('Approval Status', {
             'fields': ('retailer_approved', 'distributor_approved', 'farmer_approved', 'status')
